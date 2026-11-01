@@ -28,3 +28,12 @@ export interface Task
   priority: TaskPriority;
   dueDate: string;
 }
+
+export interface TeamMember
+{
+  id: number;
+  name: string;
+  email: string;
+  role: string;
+  color: string;
+}

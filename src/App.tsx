@@ -6,25 +6,30 @@ import Projects from './pages/Projects';
 import './App.css';
 import { TasksProvider } from './context/TasksContext';
 import Tasks from './pages/Tasks';
+import Team from './pages/Team';
+import { TeamProvider } from './context/TeamContext';
 
 function App()
 {
   return(
     <ProjectsProvider>
       <TasksProvider>
-        <BrowserRouter>
-          <div className="app-layout">
-            <Sidebar/>
+        <TeamProvider>
+          <BrowserRouter>
+            <div className="app-layout">
+              <Sidebar/>
 
-            <main className="main-content">
-              <Routes>
-                <Route path="/" element={<Dashboard/>}/>
-                <Route path="/projects" element={<Projects/>}/>
-                <Route path="/tasks" element={<Tasks />}/>
-              </Routes>
-            </main>
-          </div>
-        </BrowserRouter>
+              <main className="main-content">
+                <Routes>
+                  <Route path="/" element={<Dashboard/>}/>
+                  <Route path="/projects" element={<Projects/>}/>
+                  <Route path="/tasks" element={<Tasks />}/>
+                  <Route path="/team" element={<Team />}/>
+                </Routes>
+              </main>
+            </div>
+          </BrowserRouter>
+        </TeamProvider>
       </TasksProvider>
     </ProjectsProvider>
   );

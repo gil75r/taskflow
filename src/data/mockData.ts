@@ -1,4 +1,4 @@
-import type { Project, Task } from '../types';
+import type { Project, Task, TeamMember } from '../types';
 
 export const projects: Project[]=
 [
@@ -71,5 +71,30 @@ export const initialTasks: Task[]=
     status: 'in-progress',
     priority: 'medium',
     dueDate: '2026-11-20'
+  }
+];
+
+export const initialTeamMembers: TeamMember[]=
+[
+  {
+    id: 1,
+    name: 'John Davis',
+    email: 'john@example.com',
+    role: 'Frontend Developer',
+    color: '#6750e8'
+  },
+  {
+    id: 2,
+    name: 'Sarah Miller',
+    email: 'sarah@example.com',
+    role: 'UI/UX Designer',
+    color: '#0ea5e9'
+  },
+  {
+    id: 3,
+    name: 'Michael Johnson',
+    email: 'michael@example.com',
+    role: 'Backend Developer',
+    color: '#10b981'
   }
 ];

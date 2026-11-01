@@ -5,12 +5,12 @@ const menuItems=
 [
   { label: 'Dashboard', icon: LayoutDashboard, path: '/' },
   { label: 'Projects', icon: FolderKanban, path: '/projects' },
-  { label: 'My Tasks', icon: ListTodo, path: '/tasks' }
+  { label: 'My Tasks', icon: ListTodo, path: '/tasks' },
+  { label: 'Team', icon: Users, path: '/team' }
 ];
 
 const futureItems=
 [
-  { label: 'Team', icon: Users },
   { label: 'Calendar', icon: CalendarDays },
   { label: 'Settings', icon: Settings }
 ];
