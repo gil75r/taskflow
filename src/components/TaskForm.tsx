@@ -1,6 +1,7 @@
 import { useState, type SubmitEvent  } from 'react';
 import type { Task, TaskStatus, TaskPriority } from '../types';
 import { useProjects } from '../context/ProjectsContext';
+import { useTeam } from '../context/TeamContext';
 
 interface TaskFormProps
 {
@@ -17,23 +18,26 @@ export default function TaskForm
 }: TaskFormProps)
 {
     const { projects }=useProjects();
+    const { members }=useTeam();
 
     const [title, setTitle]=useState(task?.title ?? '');
     const [description, setDescription]=useState(task?.description ?? '');
-
     const [projectId, setProjectId]=useState(task?.projectId ?? projects[0]?.id ?? 0);
-
     const [status, setStatus]=useState<TaskStatus>(task?.status ?? 'todo');
-
     const [priority, setPriority]=useState<TaskPriority>(task?.priority ?? 'medium');
-
     const [dueDate, setDueDate]=useState(task?.dueDate ?? '');
+    const [assigneeId, setAssigneeId]=useState<number | null>(task?.assigneeId ?? null);
 
     function handleSubmit(event: SubmitEvent<HTMLFormElement>)
     {
         event.preventDefault();
 
         if(!title.trim() || !projects.some(p=> p.id===projectId))
+        {
+            return;
+        }
+
+        if(assigneeId!==null && !members.some(member=> member.id===assigneeId))
         {
             return;
         }
@@ -45,7 +49,8 @@ export default function TaskForm
             projectId,
             status,
             priority,
-            dueDate
+            dueDate,
+            assigneeId
         });
     }
 
@@ -135,6 +140,35 @@ export default function TaskForm
                         onChange={event=> setDueDate(event.target.value)}
                     />
                 </div>
+            </div>
+
+            <div className="form-field">
+                <label htmlFor="task-assignee">Assigned To</label>
+
+                <select
+                    id="task-assignee"
+                    value={assigneeId ?? ''}
+                    onChange={event=>
+                    {
+                        const value=event.target.value;
+
+                        setAssigneeId
+                        (
+                            value==='' ? null : Number(value)
+                        );
+                    }}
+                >
+                    <option value="">Unassigned</option>
+
+                    {
+                        members.map(member=>
+                        (
+                            <option key={member.id} value={member.id}>
+                                {member.name} - {member.role}
+                            </option>
+                        ))
+                    }
+                </select>
             </div>
 
             <div className="task-form-actions">

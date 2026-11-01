@@ -27,6 +27,7 @@ export interface Task
   status: TaskStatus;
   priority: TaskPriority;
   dueDate: string;
+  assigneeId?: number | null;
 }
 
 export interface TeamMember

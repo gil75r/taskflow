@@ -5,6 +5,7 @@ import type { TeamMember } from '../types';
 import { useTeam } from '../context/TeamContext';
 import TeamMemberCard from '../components/TeamMemberCard';
 import TeamMemberForm from '../components/TeamMemberForm';
+import { useTasks } from '../context/TasksContext';
 
 export default function Team()
 {
@@ -18,6 +19,7 @@ export default function Team()
 
     const [showForm, setShowForm]=useState(false);
     const [editingMember, setEditingMember]=useState<TeamMember | null>(null);
+    const { tasks, unassignTasksByMember }=useTasks();
 
     function openNewMemberForm()
     {
@@ -67,10 +69,19 @@ export default function Team()
             return;
         }
 
-        const confirmed=window.confirm(`Are you sure you want to delete ${member.name}?`);
+        const assignedTasksCount=tasks.filter
+        (
+            task=> task.assigneeId===id
+        ).length;
 
-        if(confirmed)
+        const message=assignedTasksCount>0
+            ? `Are you sure you want to delete ${member.name}?\n\n`+
+            `${assignedTasksCount} assigned task(s) will become unassigned.`
+            : `Are you sure you want to delete ${member.name}?`;
+
+        if(window.confirm(message))
         {
+            unassignTasksByMember(id);
             deleteMember(id);
         }
     }

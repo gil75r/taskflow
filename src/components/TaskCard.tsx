@@ -3,6 +3,7 @@ import type { Task, TaskStatus } from '../types';
 import { useDraggable } from '@dnd-kit/core';
 import type { CSSProperties } from 'react';
 import { useProjects } from '../context/ProjectsContext';
+import { useTeam } from '../context/TeamContext';
 
 interface TaskCardProps
 {
@@ -46,6 +47,19 @@ export default function TaskCard
     project=> project.id===task.projectId
   );
 
+  const { members }=useTeam();
+  const assignee=members.find(member=> member.id===task.assigneeId);
+
+  const assigneeInitials=assignee
+    ? assignee.name
+        .trim()
+        .split(/\s+/)
+        .slice(0, 2)
+        .map(word => word.charAt(0))
+        .join('')
+        .toUpperCase()
+    : '';
+
   return(
     <article ref={setNodeRef} className="task-card" style={style}>
       <button
@@ -78,6 +92,37 @@ export default function TaskCard
       <p className="task-description">
         {task.description}
       </p>
+
+      <div className="task-assignee">
+        {
+          assignee ?
+          (
+            <>
+              <div
+                className="task-assignee-avatar"
+                style={{ backgroundColor: assignee.color }}
+              >
+                {assigneeInitials}
+              </div>
+
+              <div className="task-assignee-details">
+                <span className="task-assignee-name">
+                  {assignee.name}
+                </span>
+
+                <span className="task-assignee-label">
+                  Assigned to
+                </span>
+              </div>
+            </>
+          ) :
+          (
+            <span className="task-unassigned">
+              Unassigned
+            </span>
+          )
+        }
+      </div>
 
       <div className="task-card-footer">
         <span className="task-due-date">

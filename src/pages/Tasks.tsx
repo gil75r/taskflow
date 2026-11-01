@@ -7,6 +7,7 @@ import KanbanColumn from '../components/KanbanColumn';
 import TaskForm from '../components/TaskForm';
 import { DndContext, PointerSensor, KeyboardSensor, useSensor, useSensors, closestCorners,
   type DragEndEvent } from '@dnd-kit/core';
+import { useTeam } from '../context/TeamContext';
 
 type TaskSortOption=
   | 'default'
@@ -71,6 +72,7 @@ export default function Tasks()
         changeTaskStatus
     }=useTasks();
     const { projects }=useProjects();
+    const { members }=useTeam();
 
     const [showForm, setShowForm]=useState(false);
     const [editingTask, setEditingTask]=useState<Task | null>(null);
@@ -78,6 +80,7 @@ export default function Tasks()
     const [selectedPriority, setSelectedPriority]=useState<TaskPriority | 'all'>('all');
     const [searchQuery, setSearchQuery]=useState('');
     const [sortBy, setSortBy]=useState<TaskSortOption>('default');
+    const [selectedAssignee, setSelectedAssignee]=useState<number | 'all' | 'unassigned'>('all');
 
     function openNewTaskForm()
     {
@@ -193,12 +196,25 @@ export default function Tasks()
         const matchesSearch=
             task.title.toLowerCase().includes(normalizedSearch) ||
             task.description.toLowerCase().includes(normalizedSearch);
+        
+        const assigneeExists=members.some
+        (
+            member=> member.id===task.assigneeId
+        );
+
+        const matchesAssignee=selectedAssignee==='all' ||
+        (
+            selectedAssignee==='unassigned'
+            ? !assigneeExists
+            : task.assigneeId===selectedAssignee
+        );
 
         return(
             projectExists &&
             matchesProject &&
             matchesPriority &&
-            matchesSearch
+            matchesSearch &&
+            matchesAssignee
         );
     });
 
@@ -310,6 +326,38 @@ export default function Tasks()
                         <option value="priority-low">Priority: Low to High</option>
                     </select>
                 </div>
+                
+                <div className="task-filter-field">
+                    <label htmlFor="filter-assignee">Assignee</label>
+
+                    <select
+                        id="filter-assignee"
+                        value={selectedAssignee}
+                        onChange={event=>
+                        {
+                            const value=event.target.value;
+
+                            setSelectedAssignee
+                            (
+                                value==='all' || value==='unassigned'
+                                ? value
+                                : Number(value)
+                            );
+                        }}
+                    >
+                        <option value="all">All Members</option>
+                        <option value="unassigned">Unassigned</option>
+
+                        {
+                            members.map(member=>
+                            (
+                                <option key={member.id} value={member.id}>
+                                    {member.name}
+                                </option>
+                            ))
+                        }
+                    </select>
+                </div>
 
                 <button
                     type="button"
@@ -320,11 +368,11 @@ export default function Tasks()
                         setSelectedPriority('all');
                         setSearchQuery('');
                         setSortBy('default');
+                        setSelectedAssignee('all');
                     }}
                 >
                     Clear Filters
                 </button>
-
             </div>
 
             <p className="filter-results">

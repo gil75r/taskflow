@@ -11,6 +11,7 @@ interface TasksContextType
   deleteTask: (id: number)=> void;
   changeTaskStatus: (id: number, status: TaskStatus)=> void;
   deleteTasksByProject: (projectId: number)=> void;
+  unassignTasksByMember: (memberId: number)=> void;
 }
 
 const TasksContext=createContext<TasksContextType | undefined>
@@ -78,6 +79,17 @@ export function TasksProvider
     );
   }
 
+  function unassignTasksByMember(memberId: number)
+  {
+    setTasks(currentTasks=>
+      currentTasks.map(task=>
+        task.assigneeId===memberId
+          ? { ...task, assigneeId: null }
+          : task
+      )
+    );
+  }
+
   return(
     <TasksContext.Provider
       value=
@@ -87,7 +99,8 @@ export function TasksProvider
         updateTask,
         deleteTask,
         changeTaskStatus,
-        deleteTasksByProject
+        deleteTasksByProject,
+        unassignTasksByMember
       }}
     >
       {children}
