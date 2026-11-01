@@ -46,6 +46,17 @@ export default function Tasks()
 
     function handleSave(data: Omit<Task, 'id'>)
     {
+        const projectExists=projects.some
+        (
+            project=> project.id===data.projectId
+        );
+
+        if(!projectExists)
+        {
+            window.alert('Please select a valid project.');
+            return;
+        }
+
         if(editingTask)
         {
             updateTask
@@ -111,6 +122,11 @@ export default function Tasks()
 
     const filteredTasks=tasks.filter(task=>
     {
+        const projectExists=projects.some
+        (
+            project=> project.id===task.projectId
+        );
+
         const matchesProject=
             selectedProject==='all' ||
             task.projectId===selectedProject;
@@ -119,7 +135,11 @@ export default function Tasks()
             selectedPriority==='all' ||
             task.priority===selectedPriority;
 
-        return matchesProject && matchesPriority;
+        return(
+            projectExists &&
+            matchesProject &&
+            matchesPriority
+        );
     });
 
     return(

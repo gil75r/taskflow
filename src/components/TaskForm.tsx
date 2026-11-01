@@ -23,17 +23,17 @@ export default function TaskForm
 
     const [projectId, setProjectId]=useState(task?.projectId ?? projects[0]?.id ?? 0);
 
-    const [status, setStatus] = useState<TaskStatus>(task?.status ?? 'todo');
+    const [status, setStatus]=useState<TaskStatus>(task?.status ?? 'todo');
 
-    const [priority, setPriority] = useState<TaskPriority>(task?.priority ?? 'medium');
+    const [priority, setPriority]=useState<TaskPriority>(task?.priority ?? 'medium');
 
-    const [dueDate, setDueDate] = useState(task?.dueDate ?? '');
+    const [dueDate, setDueDate]=useState(task?.dueDate ?? '');
 
     function handleSubmit(event: SubmitEvent<HTMLFormElement>)
     {
         event.preventDefault();
 
-        if(!title.trim() || !projects.some(p => p.id === projectId))
+        if(!title.trim() || !projects.some(p=> p.id===projectId))
         {
             return;
         }

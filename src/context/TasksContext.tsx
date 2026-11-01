@@ -10,6 +10,7 @@ interface TasksContextType
   updateTask: (task: Task)=> void;
   deleteTask: (id: number)=> void;
   changeTaskStatus: (id: number, status: TaskStatus)=> void;
+  deleteTasksByProject: (projectId: number)=> void;
 }
 
 const TasksContext=createContext<TasksContextType | undefined>
@@ -67,6 +68,16 @@ export function TasksProvider
     );
   }
 
+  function deleteTasksByProject(projectId: number)
+  {
+    setTasks(currentTasks=>
+      currentTasks.filter
+      (
+        task=> task.projectId!==projectId
+      )
+    );
+  }
+
   return(
     <TasksContext.Provider
       value=
@@ -75,7 +86,8 @@ export function TasksProvider
         addTask,
         updateTask,
         deleteTask,
-        changeTaskStatus
+        changeTaskStatus,
+        deleteTasksByProject
       }}
     >
       {children}
