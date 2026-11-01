@@ -824,6 +824,47 @@ nav-disabled
   margin: 0 0 18px;
 }
 
+/* Search Input */
+
+.task-search-field
+{
+  flex: 2;
+  min-width: 240px;
+}
+
+.task-filter-field input
+{
+  width: 100%;
+  padding: 10px 12px;
+  border: 1px solid #cbd5e1;
+  border-radius: 8px;
+  background: white;
+  color: #334155;
+  font: inherit;
+}
+
+.task-filter-field input:focus, .task-filter-field select:focus
+{
+  outline: 2px solid #6750e8;
+  outline-offset: 1px;
+}
+
+/* Project Label on Task Card */
+
+.task-project-name
+{
+  display: inline-flex;
+  align-items: center;
+  width: fit-content;
+  margin-bottom: 10px;
+  padding: 4px 9px;
+  background: #f1f5f9;
+  color: #475569;
+  border-radius: 6px;
+  font-size: 12px;
+  font-weight: 500;
+}
+
 /* Responsive */
 
 @media(max-width: 1100px)
@@ -939,6 +980,13 @@ nav-disabled
   {
     width: 100%;
     min-width: 0;
+    flex: initial;
+  }
+
+  .task-search-field
+  {
+    min-width: 0;
+    width: 100%;
     flex: initial;
   }
 }

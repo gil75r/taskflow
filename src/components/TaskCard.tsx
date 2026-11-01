@@ -2,6 +2,7 @@ import { Pencil, Trash2 } from 'lucide-react';
 import type { Task, TaskStatus } from '../types';
 import { useDraggable } from '@dnd-kit/core';
 import type { CSSProperties } from 'react';
+import { useProjects } from '../context/ProjectsContext';
 
 interface TaskCardProps
 {
@@ -38,6 +39,13 @@ export default function TaskCard
     position: 'relative'
   };
 
+  const { projects }=useProjects();
+
+  const project=projects.find
+  (
+    project=> project.id===task.projectId
+  );
+
   return(
     <article ref={setNodeRef} className="task-card" style={style}>
       <button
@@ -57,6 +65,15 @@ export default function TaskCard
           {task.priority}
         </span>
       </div>
+
+      {
+        project &&
+        (
+          <span className="task-project-name">
+            {project.name}
+          </span>
+        )
+      }
 
       <p className="task-description">
         {task.description}

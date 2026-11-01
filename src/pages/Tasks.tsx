@@ -8,6 +8,58 @@ import TaskForm from '../components/TaskForm';
 import { DndContext, PointerSensor, KeyboardSensor, useSensor, useSensors, closestCorners,
   type DragEndEvent } from '@dnd-kit/core';
 
+type TaskSortOption=
+  | 'default'
+  | 'due-date-asc'
+  | 'due-date-desc'
+  | 'priority-high'
+  | 'priority-low';
+
+const priorityOrder={ low: 1, medium: 2, high: 3 };
+
+function sortTasks(tasks: Task[], sortBy: TaskSortOption): Task[]
+{
+    const sortedTasks=[...tasks];
+
+    switch(sortBy)
+    {
+        case 'due-date-asc':
+        return sortedTasks.sort((a, b)=>
+        {
+            if(!a.dueDate) return 1;
+            if(!b.dueDate) return -1;
+
+            return a.dueDate.localeCompare(b.dueDate);
+        });
+
+        case 'due-date-desc':
+        return sortedTasks.sort((a, b)=>
+        {
+            if(!a.dueDate) return 1;
+            if(!b.dueDate) return -1;
+
+            return b.dueDate.localeCompare(a.dueDate);
+        });
+
+        case 'priority-high':
+        return sortedTasks.sort
+        (
+            (a, b)=>
+            priorityOrder[b.priority]-priorityOrder[a.priority]
+        );
+
+        case 'priority-low':
+        return sortedTasks.sort
+        (
+            (a, b)=>
+            priorityOrder[a.priority]-priorityOrder[b.priority]
+        );
+
+        default:
+        return sortedTasks;
+    }
+}
+
 export default function Tasks()
 {
     const
@@ -18,13 +70,14 @@ export default function Tasks()
         deleteTask,
         changeTaskStatus
     }=useTasks();
-
     const { projects }=useProjects();
 
     const [showForm, setShowForm]=useState(false);
     const [editingTask, setEditingTask]=useState<Task | null>(null);
     const [selectedProject, setSelectedProject]=useState<number | 'all'>('all');
     const [selectedPriority, setSelectedPriority]=useState<TaskPriority | 'all'>('all');
+    const [searchQuery, setSearchQuery]=useState('');
+    const [sortBy, setSortBy]=useState<TaskSortOption>('default');
 
     function openNewTaskForm()
     {
@@ -135,12 +188,21 @@ export default function Tasks()
             selectedPriority==='all' ||
             task.priority===selectedPriority;
 
+        const normalizedSearch=searchQuery.trim().toLowerCase();
+
+        const matchesSearch=
+            task.title.toLowerCase().includes(normalizedSearch) ||
+            task.description.toLowerCase().includes(normalizedSearch);
+
         return(
             projectExists &&
             matchesProject &&
-            matchesPriority
+            matchesPriority &&
+            matchesSearch
         );
     });
+
+    const displayedTasks=sortTasks(filteredTasks, sortBy);
 
     return(
         <div className="tasks-page">
@@ -168,8 +230,20 @@ export default function Tasks()
                     </p>
                 )
             }
-
+{/* חחחחח */}
             <div className="task-filters">
+                <div className="task-filter-field task-search-field">
+                    <label htmlFor="search-tasks">Search Tasks</label>
+
+                    <input
+                        id="search-tasks"
+                        type="search"
+                        placeholder="Search by title or description..."
+                        value={searchQuery}
+                        onChange={event=> setSearchQuery(event.target.value)}
+                    />
+                </div>
+
                 <div className="task-filter-field">
                     <label htmlFor="filter-project">Project</label>
 
@@ -186,16 +260,16 @@ export default function Tasks()
                             );
                         }}
                     >
-                    <option value="all">All Projects</option>
+                        <option value="all">All Projects</option>
 
-                    {
-                        projects.map(project=>
-                        (
-                            <option key={project.id} value={project.id}>
-                                {project.name}
-                            </option>
-                        ))
-                    }
+                        {
+                            projects.map(project=>
+                            (
+                                <option key={project.id} value={project.id}>
+                                    {project.name}
+                                </option>
+                            ))
+                        }
                     </select>
                 </div>
 
@@ -205,15 +279,35 @@ export default function Tasks()
                     <select
                         id="filter-priority"
                         value={selectedPriority}
-                        onChange={event=> setSelectedPriority
-                        (
-                            event.target.value as TaskPriority | 'all'
-                        )}
+                        onChange={event=>
+                            setSelectedPriority
+                            (
+                                event.target.value as TaskPriority | 'all'
+                            )
+                        }
                     >
-                    <option value="all">All Priorities</option>
-                    <option value="high">High</option>
-                    <option value="medium">Medium</option>
-                    <option value="low">Low</option>
+                        <option value="all">All Priorities</option>
+                        <option value="high">High</option>
+                        <option value="medium">Medium</option>
+                        <option value="low">Low</option>
+                    </select>
+                </div>
+
+                <div className="task-filter-field">
+                    <label htmlFor="sort-tasks">Sort By</label>
+
+                    <select
+                        id="sort-tasks"
+                        value={sortBy}
+                        onChange={event=>
+                            setSortBy(event.target.value as TaskSortOption)
+                        }
+                    >
+                        <option value="default">Default</option>
+                        <option value="due-date-asc">Due Date: Earliest First</option>
+                        <option value="due-date-desc">Due Date: Latest First</option>
+                        <option value="priority-high">Priority: High to Low</option>
+                        <option value="priority-low">Priority: Low to High</option>
                     </select>
                 </div>
 
@@ -224,10 +318,13 @@ export default function Tasks()
                     {
                         setSelectedProject('all');
                         setSelectedPriority('all');
+                        setSearchQuery('');
+                        setSortBy('default');
                     }}
                 >
                     Clear Filters
                 </button>
+
             </div>
 
             <p className="filter-results">
@@ -243,7 +340,7 @@ export default function Tasks()
                     <KanbanColumn
                         title="To Do"
                         status="todo"
-                        tasks={filteredTasks}
+                        tasks={displayedTasks}
                         onStatusChange={changeTaskStatus}
                         onEdit={openEditTaskForm}
                         onDelete={handleDelete}
@@ -252,7 +349,7 @@ export default function Tasks()
                     <KanbanColumn
                         title="In Progress"
                         status="in-progress"
-                        tasks={filteredTasks}
+                        tasks={displayedTasks}
                         onStatusChange={changeTaskStatus}
                         onEdit={openEditTaskForm}
                         onDelete={handleDelete}
@@ -261,7 +358,7 @@ export default function Tasks()
                     <KanbanColumn
                         title="Done"
                         status="done"
-                        tasks={filteredTasks}
+                        tasks={displayedTasks}
                         onStatusChange={changeTaskStatus}
                         onEdit={openEditTaskForm}
                         onDelete={handleDelete}
