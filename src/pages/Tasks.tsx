@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { Plus } from 'lucide-react';
-import type { Task } from '../types';
+import type { Task, TaskPriority } from '../types';
 import { useTasks } from '../context/TasksContext';
 import { useProjects } from '../context/ProjectsContext';
 import KanbanColumn from '../components/KanbanColumn';
@@ -23,6 +23,8 @@ export default function Tasks()
 
     const [showForm, setShowForm]=useState(false);
     const [editingTask, setEditingTask]=useState<Task | null>(null);
+    const [selectedProject, setSelectedProject]=useState<number | 'all'>('all');
+    const [selectedPriority, setSelectedPriority]=useState<TaskPriority | 'all'>('all');
 
     function openNewTaskForm()
     {
@@ -107,6 +109,18 @@ export default function Tasks()
         changeTaskStatus(taskId, newStatus);
     }
 
+    const filteredTasks=tasks.filter(task=>
+    {
+        const matchesProject=
+            selectedProject==='all' ||
+            task.projectId===selectedProject;
+
+        const matchesPriority=
+            selectedPriority==='all' ||
+            task.priority===selectedPriority;
+
+        return matchesProject && matchesPriority;
+    });
 
     return(
         <div className="tasks-page">
@@ -135,6 +149,71 @@ export default function Tasks()
                 )
             }
 
+            <div className="task-filters">
+                <div className="task-filter-field">
+                    <label htmlFor="filter-project">Project</label>
+
+                    <select
+                        id="filter-project"
+                        value={selectedProject}
+                        onChange={event=>
+                        {
+                            const value=event.target.value;
+
+                            setSelectedProject
+                            (
+                                value==='all' ? 'all' : Number(value)
+                            );
+                        }}
+                    >
+                    <option value="all">All Projects</option>
+
+                    {
+                        projects.map(project=>
+                        (
+                            <option key={project.id} value={project.id}>
+                                {project.name}
+                            </option>
+                        ))
+                    }
+                    </select>
+                </div>
+
+                <div className="task-filter-field">
+                    <label htmlFor="filter-priority">Priority</label>
+
+                    <select
+                        id="filter-priority"
+                        value={selectedPriority}
+                        onChange={event=> setSelectedPriority
+                        (
+                            event.target.value as TaskPriority | 'all'
+                        )}
+                    >
+                    <option value="all">All Priorities</option>
+                    <option value="high">High</option>
+                    <option value="medium">Medium</option>
+                    <option value="low">Low</option>
+                    </select>
+                </div>
+
+                <button
+                    type="button"
+                    className="secondary-button"
+                    onClick={()=>
+                    {
+                        setSelectedProject('all');
+                        setSelectedPriority('all');
+                    }}
+                >
+                    Clear Filters
+                </button>
+            </div>
+
+            <p className="filter-results">
+                Showing {filteredTasks.length} of {tasks.length} tasks
+            </p>
+
             <DndContext
                 sensors={sensors}
                 collisionDetection={closestCorners}
@@ -144,7 +223,7 @@ export default function Tasks()
                     <KanbanColumn
                         title="To Do"
                         status="todo"
-                        tasks={tasks}
+                        tasks={filteredTasks}
                         onStatusChange={changeTaskStatus}
                         onEdit={openEditTaskForm}
                         onDelete={handleDelete}
@@ -153,7 +232,7 @@ export default function Tasks()
                     <KanbanColumn
                         title="In Progress"
                         status="in-progress"
-                        tasks={tasks}
+                        tasks={filteredTasks}
                         onStatusChange={changeTaskStatus}
                         onEdit={openEditTaskForm}
                         onDelete={handleDelete}
@@ -162,7 +241,7 @@ export default function Tasks()
                     <KanbanColumn
                         title="Done"
                         status="done"
-                        tasks={tasks}
+                        tasks={filteredTasks}
                         onStatusChange={changeTaskStatus}
                         onEdit={openEditTaskForm}
                         onDelete={handleDelete}

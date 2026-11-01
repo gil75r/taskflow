@@ -770,6 +770,60 @@ nav-disabled
   outline-offset: -2px;
 }
 
+/* Task Filters */
+
+.task-filters
+{
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-end;
+  gap: 16px;
+  padding: 18px;
+  margin-bottom: 12px;
+  background: #ffffff;
+  border: 1px solid #e2e8f0;
+  border-radius: 12px;
+}
+
+.task-filter-field
+{
+  display: flex;
+  flex-direction: column;
+  gap: 7px;
+  min-width: 180px;
+  flex: 1;
+}
+
+.task-filter-field label
+{
+  font-size: 13px;
+  font-weight: 600;
+  color: #475569;
+}
+
+.task-filter-field select
+{
+  width: 100%;
+  padding: 10px 12px;
+  border: 1px solid #cbd5e1;
+  border-radius: 8px;
+  background: white;
+  color: #334155;
+  font: inherit;
+}
+
+.task-filters .secondary-button
+{
+  min-height: 42px;
+}
+
+.filter-results
+{
+  color: #64748b;
+  font-size: 13px;
+  margin: 0 0 18px;
+}
+
 /* Responsive */
 
 @media(max-width: 1100px)
@@ -873,5 +927,18 @@ nav-disabled
   .task-form-grid
   {
     grid-template-columns: 1fr;
+  }
+
+  .task-filters
+  {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .task-filter-field
+  {
+    width: 100%;
+    min-width: 0;
+    flex: initial;
   }
 }

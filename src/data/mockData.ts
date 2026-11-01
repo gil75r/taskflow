@@ -1,4 +1,4 @@
-import type { Project, DashboardStat, Task } from '../types';
+import type { Project, Task } from '../types';
 
 export const projects: Project[]=
 [
@@ -23,14 +23,6 @@ export const projects: Project[]=
     progress: 90,
     color: '#10b981'
   }
-];
-
-export const dashboardStats: DashboardStat[]=
-[
-  { title: 'Total Projects', value: 12, icon: 'projects' },
-  { title: 'Total Tasks', value: 48, icon: 'tasks' },
-  { title: 'Completed Tasks', value: 27, icon: 'completed' },
-  { title: 'Overdue Tasks', value: 5, icon: 'overdue' }
 ];
 
 export const initialTasks: Task[]= 
