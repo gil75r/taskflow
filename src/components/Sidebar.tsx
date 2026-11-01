@@ -4,12 +4,12 @@ import { LayoutDashboard, FolderKanban, ListTodo, Users, CalendarDays, Settings 
 const menuItems=
 [
   { label: 'Dashboard', icon: LayoutDashboard, path: '/' },
-  { label: 'Projects', icon: FolderKanban, path: '/projects' }
+  { label: 'Projects', icon: FolderKanban, path: '/projects' },
+  { label: 'My Tasks', icon: ListTodo, path: '/tasks' }
 ];
 
 const futureItems=
 [
-  { label: 'My Tasks', icon: ListTodo },
   { label: 'Team', icon: Users },
   { label: 'Calendar', icon: CalendarDays },
   { label: 'Settings', icon: Settings }

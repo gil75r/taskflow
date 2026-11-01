@@ -4,23 +4,28 @@ import Sidebar from './components/Sidebar';
 import Dashboard from './pages/Dashboard';
 import Projects from './pages/Projects';
 import './App.css';
+import { TasksProvider } from './context/TasksContext';
+import Tasks from './pages/Tasks';
 
 function App()
 {
   return(
     <ProjectsProvider>
-      <BrowserRouter>
-        <div className="app-layout">
-          <Sidebar/>
+      <TasksProvider>
+        <BrowserRouter>
+          <div className="app-layout">
+            <Sidebar/>
 
-          <main className="main-content">
-            <Routes>
-              <Route path="/" element={<Dashboard/>}/>
-              <Route path="/projects" element={<Projects/>}/>
-            </Routes>
-          </main>
-        </div>
-      </BrowserRouter>
+            <main className="main-content">
+              <Routes>
+                <Route path="/" element={<Dashboard/>}/>
+                <Route path="/projects" element={<Projects/>}/>
+                <Route path="/tasks" element={<Tasks />}/>
+              </Routes>
+            </main>
+          </div>
+        </BrowserRouter>
+      </TasksProvider>
     </ProjectsProvider>
   );
 }

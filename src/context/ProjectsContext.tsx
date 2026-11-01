@@ -1,4 +1,5 @@
-import { createContext, useContext, useState, type ReactNode } from 'react';
+import { createContext, useContext, type ReactNode } from 'react';
+import { useLocalStorage } from '../hooks/useLocalStorage';
 import type { Project } from '../types';
 import { projects as initialProjects } from '../data/mockData';
 
@@ -14,8 +15,9 @@ const ProjectsContext=createContext<ProjectsContextType | undefined>(undefined);
 
 export function ProjectsProvider({ children } : { children: ReactNode; })
 {
-  const [projects, setProjects]=useState<Project[]>
+  const [projects, setProjects]=useLocalStorage<Project[]>
   (
+    'taskflow-projects',
     initialProjects
   );
 
