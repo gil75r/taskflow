@@ -962,6 +962,108 @@ nav-disabled
   overflow-wrap: anywhere;
 }
 
+/* Team Form */
+
+.team-member-form
+{
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+
+.team-member-form h2
+{
+  margin: 0 0 8px;
+  color: #1e293b;
+}
+
+.team-member-form .form-field
+{
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.team-member-form label
+{
+  font-size: 14px;
+  font-weight: 600;
+  color: #334155;
+}
+
+.team-member-form input:not([type="color"])
+{
+  padding: 11px 12px;
+  border: 1px solid #cbd5e1;
+  border-radius: 8px;
+  font: inherit;
+}
+
+.team-member-form input[type="color"]
+{
+  width: 70px;
+  height: 42px;
+  padding: 4px;
+  border: 1px solid #cbd5e1;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+.team-form-actions
+{
+  display: flex;
+  justify-content: flex-end;
+  gap: 12px;
+  margin-top: 8px;
+}
+
+/* Team Card Actions */
+
+.team-member-actions
+{
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  margin-top: 20px;
+}
+
+.team-action-button
+{
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  padding: 8px 12px;
+  border: 1px solid #e2e8f0;
+  border-radius: 8px;
+  background: #f8fafc;
+  color: #475569;
+  font: inherit;
+  font-size: 13px;
+  cursor: pointer;
+}
+
+.team-action-button:hover
+{
+  background: #ede9fe;
+  color: #6750e8;
+}
+
+.team-delete-button:hover
+{
+  background: #fef2f2;
+  color: #dc2626;
+}
+
+.team-summary
+{
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: #64748b;
+  font-size: 14px;
+}
+
 /* Responsive */
 
 @media(max-width: 1100px)
