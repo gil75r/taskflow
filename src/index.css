@@ -50,7 +50,6 @@ body
   margin: 0;
   min-width: 320px;
   font-family: Arial, sans-serif;
-  background-color: #f8f9fc;
   background: var(--bg-page);
   color: var(--text-primary);
 }

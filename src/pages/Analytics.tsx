@@ -21,6 +21,7 @@ import { useProjects } from '../context/ProjectsContext';
 import { useTeam } from '../context/TeamContext';
 import AnalyticsCard from '../components/AnalyticsCard';
 import { getAnalytics } from '../utils/analyticsUtils';
+import { useSettings } from '../context/SettingsContext';
 
 const STATUS_COLORS=['#94a3b8', '#6750e8', '#10b981'];
 
@@ -44,6 +45,12 @@ export default function Analytics()
             fill: STATUS_COLORS[index]
         })
     );
+
+    const { isDark }=useSettings();
+
+    const chartTextColor=isDark ? '#cbd5e1' : '#64748b';
+    const chartGridColor=isDark ? '#334155' : '#e2e8f0';
+    const chartBackground=isDark ? '#1e293b' : '#ffffff';
 
     return(
         <div className="analytics-page">
@@ -105,10 +112,20 @@ export default function Analytics()
                                         cx="50%"
                                         cy="50%"
                                         outerRadius={90}
-                                        label
+                                        label={{ fill: chartTextColor }}
                                     />
-                                    <Tooltip />
-                                    <Legend />
+                                    <Tooltip
+                                        contentStyle=
+                                        {{
+                                            backgroundColor: chartBackground,
+                                            border: `1px solid ${chartGridColor}`,
+                                            borderRadius: '8px',
+                                            color: chartTextColor
+                                        }}
+                                        labelStyle={{ color: chartTextColor }}
+                                        itemStyle={{ color: chartTextColor }}
+                                    />
+                                    <Legend wrapperStyle={{ color: chartTextColor }}/>
                                 </PieChart>
                             </ResponsiveContainer>
                         )
@@ -123,10 +140,28 @@ export default function Analytics()
                     <div className="analytics-chart">
                         <ResponsiveContainer width="100%" height="100%">
                             <BarChart data={analytics.priorityData}>
-                                <CartesianGrid strokeDasharray="3 3"/>
-                                <XAxis dataKey="name"/>
-                                <YAxis allowDecimals={false}/>
-                                <Tooltip/>
+                                <CartesianGrid strokeDasharray="3 3" stroke={chartGridColor}/>
+                                <XAxis
+                                    dataKey="name"
+                                    tick={{ fill: chartTextColor }}
+                                    stroke={chartGridColor}
+                                />
+                                <YAxis
+                                    allowDecimals={false}
+                                    tick={{ fill: chartTextColor }}
+                                    stroke={chartGridColor}
+                                />
+                                <Tooltip
+                                    contentStyle=
+                                    {{
+                                        backgroundColor: chartBackground,
+                                        border: `1px solid ${chartGridColor}`,
+                                        borderRadius: '8px',
+                                        color: chartTextColor
+                                    }}
+                                    labelStyle={{ color: chartTextColor }}
+                                    itemStyle={{ color: chartTextColor }}
+                                />
                                 <Bar
                                     dataKey="tasks"
                                     fill="#6750e8"
@@ -156,14 +191,31 @@ export default function Analytics()
                                     layout="vertical"
                                     margin={{ left: 20, right: 20 }}
                                 >
-                                    <CartesianGrid strokeDasharray="3 3"/>
-                                    <XAxis type="number" allowDecimals={false}/>
+                                    <CartesianGrid strokeDasharray="3 3" stroke={chartGridColor}/>
+                                    <XAxis
+                                        type="number"
+                                        allowDecimals={false}
+                                        tick={{ fill: chartTextColor }}
+                                        stroke={chartGridColor}
+                                    />
                                     <YAxis
                                         type="category"
                                         dataKey="name"
                                         width={110}
+                                        tick={{ fill: chartTextColor }}
+                                        stroke={chartGridColor}
                                     />
-                                    <Tooltip/>
+                                    <Tooltip
+                                        contentStyle=
+                                        {{
+                                            backgroundColor: chartBackground,
+                                            border: `1px solid ${chartGridColor}`,
+                                            borderRadius: '8px',
+                                            color: chartTextColor
+                                        }}
+                                        labelStyle={{ color: chartTextColor }}
+                                        itemStyle={{ color: chartTextColor }}
+                                    />
                                     <Bar
                                         dataKey="tasks"
                                         fill="#0ea5e9"
