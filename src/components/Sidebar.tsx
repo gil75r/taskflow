@@ -16,12 +16,8 @@ const menuItems=
   { label: 'My Tasks', icon: ListTodo, path: '/tasks' },
   { label: 'Team', icon: Users, path: '/team' },
   { label: 'Calendar', icon: CalendarDays, path: '/calendar' },
-  { label: 'Analytics', icon: ChartNoAxesCombined, path: '/analytics' }
-];
-
-const futureItems=
-[
-  { label: 'Settings', icon: Settings }
+  { label: 'Analytics', icon: ChartNoAxesCombined, path: '/analytics' },
+  { label: 'Settings', icon: Settings, path: '/settings' }
 ];
 
 function Sidebar()
@@ -50,24 +46,6 @@ function Sidebar()
                             <Icon size={20}/>
                             <span>{item.label}</span>
                         </NavLink>
-                    );
-                })
-            }
-
-            {
-                futureItems.map((item)=>
-                {
-                    const Icon=item.icon;
-
-                    return(
-                        <div
-                            key={item.label}
-                            className="nav-item nav-disabled"
-                            aria-disabled="true"
-                        >
-                            <Icon size={20}/>
-                            <span>{item.label}</span>
-                        </div>
                     );
                 })
             }
