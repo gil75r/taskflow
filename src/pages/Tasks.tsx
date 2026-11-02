@@ -5,8 +5,17 @@ import { useTasks } from '../context/TasksContext';
 import { useProjects } from '../context/ProjectsContext';
 import KanbanColumn from '../components/KanbanColumn';
 import TaskForm from '../components/TaskForm';
-import { DndContext, PointerSensor, KeyboardSensor, useSensor, useSensors, closestCorners,
-  type DragEndEvent } from '@dnd-kit/core';
+import
+{
+    DndContext,
+    MouseSensor,
+    TouchSensor,
+    KeyboardSensor,
+    useSensor,
+    useSensors,
+    closestCorners,
+    type DragEndEvent
+} from '@dnd-kit/core';
 import { useTeam } from '../context/TeamContext';
 
 type TaskSortOption=
@@ -141,13 +150,23 @@ export default function Tasks()
 
     const sensors=useSensors
     (
-        useSensor(PointerSensor,
+        useSensor(MouseSensor,
         {
             activationConstraint:
             {
                 distance: 8
             }
         }),
+
+        useSensor(TouchSensor,
+        {
+            activationConstraint:
+            {
+                delay: 150,
+                tolerance: 15
+            }
+        }),
+
         useSensor(KeyboardSensor)
     );
 
@@ -247,7 +266,7 @@ export default function Tasks()
                     </p>
                 )
             }
-{/* חחחחח */}
+
             <div className="task-filters">
                 <div className="task-filter-field task-search-field">
                     <label htmlFor="search-tasks">Search Tasks</label>

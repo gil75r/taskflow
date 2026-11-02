@@ -61,6 +61,8 @@ function Dashboard()
         }
     ];
 
+    const recentProjects=[...projects].sort((a, b)=> b.id-a.id).slice(0, 3);
+
     return(
         <div className="dashboard">
             <Header/>
@@ -82,7 +84,7 @@ function Dashboard()
 
                 <div className="projects-grid">
                 {
-                    projects.slice(0, 3).map((project)=>
+                    recentProjects.map((project)=>
                     (
                         <ProjectCard key={project.id} {...project}/>
                     ))
