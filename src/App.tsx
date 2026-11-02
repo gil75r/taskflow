@@ -8,6 +8,7 @@ import { TasksProvider } from './context/TasksContext';
 import Tasks from './pages/Tasks';
 import Team from './pages/Team';
 import { TeamProvider } from './context/TeamContext';
+import Calendar from './pages/Calendar';
 
 function App()
 {
@@ -25,6 +26,7 @@ function App()
                   <Route path="/projects" element={<Projects/>}/>
                   <Route path="/tasks" element={<Tasks />}/>
                   <Route path="/team" element={<Team />}/>
+                  <Route path="/calendar" element={<Calendar/>} />
                 </Routes>
               </main>
             </div>

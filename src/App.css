@@ -1116,6 +1116,265 @@ nav-disabled
   font-style: italic;
 }
 
+/* Calendar Page */
+
+.calendar-page
+{
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.calendar-page-header h1
+{
+  margin: 0 0 8px;
+}
+
+.calendar-page-header p
+{
+  margin: 0;
+  color: #64748b;
+}
+
+.calendar-toolbar
+{
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 16px;
+}
+
+.calendar-navigation
+{
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.calendar-navigation h2
+{
+  min-width: 180px;
+  margin: 0;
+  font-size: 20px;
+  text-align: center;
+}
+
+.calendar-filters
+{
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.calendar-filters select
+{
+  padding: 10px 12px;
+  border: 1px solid #cbd5e1;
+  border-radius: 8px;
+  background: white;
+  font: inherit;
+}
+
+.calendar-container
+{
+  overflow-x: auto;
+  border: 1px solid #e2e8f0;
+  border-radius: 14px;
+  background: white;
+}
+
+.calendar-grid
+{
+  display: grid;
+  grid-template-columns: repeat(7, minmax(0, 1fr));
+  gap: 1px;
+  background: #e2e8f0;
+}
+
+.calendar-weekday
+{
+  padding: 14px 6px;
+  background: #f8fafc;
+  color: #64748b;
+  text-align: center;
+  font-size: 13px;
+  font-weight: 600;
+}
+
+.calendar-day, .calendar-empty-day
+{
+  min-height: 115px;
+  min-width: 0;
+  padding: 10px;
+  background: white;
+}
+
+.calendar-day
+{
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  gap: 8px;
+  border: none;
+  text-align: left;
+  cursor: pointer;
+  font: inherit;
+}
+
+.calendar-day:hover
+{
+  background: #f8f7ff;
+}
+
+.calendar-empty-day
+{
+  background: #f8fafc;
+}
+
+.calendar-day-number
+{
+  align-self: flex-start;
+  font-size: 14px;
+  font-weight: 600;
+  color: #334155;
+}
+
+.calendar-today .calendar-day-number
+{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 27px;
+  height: 27px;
+  border-radius: 50%;
+  background: #6750e8;
+  color: white;
+}
+
+.calendar-selected
+{
+  background: #f3f0ff;
+  box-shadow: inset 0 0 0 2px #6750e8;
+}
+
+.calendar-overdue:not(.calendar-selected)
+{
+  background: #fff7f7;
+}
+
+.calendar-day-tasks
+{
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  min-width: 0;
+}
+
+.calendar-task
+{
+  display: block;
+  overflow: hidden;
+  padding: 5px 7px;
+  border-radius: 5px;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  font-size: 11px;
+  font-weight: 500;
+}
+
+.calendar-task-high
+{
+  background: #fee2e2;
+  color: #b91c1c;
+}
+
+.calendar-task-medium
+{
+  background: #fef3c7;
+  color: #92400e;
+}
+
+.calendar-task-low
+{
+  background: #dcfce7;
+  color: #166534;
+}
+
+.calendar-more
+{
+  color: #64748b;
+  font-size: 11px;
+}
+
+.calendar-selected-tasks
+{
+  padding: 22px;
+  border: 1px solid #e2e8f0;
+  border-radius: 14px;
+  background: white;
+}
+
+.calendar-selected-tasks h2
+{
+  margin: 0 0 18px;
+  font-size: 18px;
+}
+
+.calendar-task-list
+{
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.calendar-task-detail
+{
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 14px;
+  border: 1px solid #e2e8f0;
+  border-radius: 9px;
+}
+
+.calendar-task-detail h3
+{
+  margin: 0 0 5px;
+  font-size: 14px;
+}
+
+.calendar-task-detail p
+{
+  margin: 0;
+  color: #64748b;
+  font-size: 12px;
+}
+
+.calendar-priority
+{
+  flex-shrink: 0;
+  font-size: 12px;
+  font-weight: 600;
+  text-transform: capitalize;
+}
+
+.calendar-priority-high
+{
+  color: #dc2626;
+}
+
+.calendar-priority-medium
+{
+  color: #d97706;
+}
+
+.calendar-priority-low
+{
+  color: #16a34a;
+}
+
 /* Responsive */
 
 @media(max-width: 1100px)
@@ -1143,6 +1402,27 @@ nav-disabled
   .team-grid
   {
     grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 850px)
+{
+  .calendar-grid
+  {
+    min-width: 650px;
+  }
+
+  .calendar-day,
+  .calendar-empty-day
+  {
+    min-height: 90px;
+    padding: 6px;
+  }
+
+  .calendar-navigation h2
+  {
+    min-width: 145px;
+    font-size: 16px;
   }
 }
 
