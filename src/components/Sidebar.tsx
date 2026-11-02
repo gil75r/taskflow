@@ -1,5 +1,13 @@
 import { NavLink } from 'react-router';
-import { LayoutDashboard, FolderKanban, ListTodo, Users, CalendarDays, Settings } from 'lucide-react';
+import {
+    LayoutDashboard,
+    FolderKanban,
+    ListTodo,
+    Users,
+    CalendarDays,
+    ChartNoAxesCombined,
+    Settings
+} from 'lucide-react';
 
 const menuItems=
 [
@@ -7,7 +15,8 @@ const menuItems=
   { label: 'Projects', icon: FolderKanban, path: '/projects' },
   { label: 'My Tasks', icon: ListTodo, path: '/tasks' },
   { label: 'Team', icon: Users, path: '/team' },
-  { label: 'Calendar', icon: CalendarDays, path: '/calendar' }
+  { label: 'Calendar', icon: CalendarDays, path: '/calendar' },
+  { label: 'Analytics', icon: ChartNoAxesCombined, path: '/analytics' }
 ];
 
 const futureItems=
