@@ -159,10 +159,10 @@ export default function TaskCard
         <button
           type="button"
           className="task-action-button delete"
-          aria-label={`Delete ${task.title}`}
+          aria-label={`Delete task ${task.title}`}
           onClick={()=> onDelete(task.id)}
         >
-          <Trash2 size={16}/>
+          <Trash2 size={16} aria-hidden="true"/>
         </button>
       </div>
     </article>

@@ -67,11 +67,11 @@ function ProjectForm({ project, onSave, onCancel }: ProjectFormProps)
       />
 
       <div className="form-actions">
-        <button type="button" onClick={onCancel}>
+        <button type="button" onClick={onCancel} aria-label="Cancel changes">
           Cancel
         </button>
 
-        <button type="submit" className="primary-button">
+        <button type="submit" className="primary-button" aria-label="Save changes">
           {project ? 'Save Changes' : 'Create Project'}
         </button>
       </div>

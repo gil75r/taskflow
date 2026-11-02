@@ -99,6 +99,7 @@ export default function Team()
                     type="button"
                     className="primary-button"
                     onClick={openNewMemberForm}
+                    aria-label="Add member"
                 >
                     <Plus size={18}/>
                     Add Member

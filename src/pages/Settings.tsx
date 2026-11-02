@@ -62,6 +62,7 @@ export default function Settings()
                                 ${
                                     isSelected ? 'theme-option-selected' : ''
                                 }`}
+                                htmlFor={option.value}
                             >
                                 <input
                                     type="radio"

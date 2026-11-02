@@ -176,11 +176,12 @@ export default function TaskForm
                     type="button"
                     className="secondary-button"
                     onClick={onCancel}
+                     aria-label="Cancel changes"
                     >
                     Cancel
                 </button>
 
-                <button type="submit" className="primary-button">
+                <button type="submit" className="primary-button"  aria-label="Save changes">
                     {task ? 'Save Changes' : 'Create Task'}
                 </button>
             </div>

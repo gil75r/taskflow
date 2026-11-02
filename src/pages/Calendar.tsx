@@ -118,6 +118,7 @@ export default function Calendar()
                         type="button"
                         className="secondary-button"
                         onClick={goToToday}
+                        aria-label="Today"
                     >
                         Today
                     </button>

@@ -232,6 +232,7 @@ export default function Tasks()
                     className="primary-button"
                     onClick={openNewTaskForm}
                     disabled={projects.length===0}
+                    aria-label="New task"
                     >
                     <Plus size={18}/>
                     New Task
@@ -370,6 +371,7 @@ export default function Tasks()
                         setSortBy('default');
                         setSelectedAssignee('all');
                     }}
+                    aria-label="Clear filters"
                 >
                     Clear Filters
                 </button>

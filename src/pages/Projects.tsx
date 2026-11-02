@@ -86,6 +86,7 @@ function Projects()
                         setEditingProject(null);
                         setShowForm(true);
                     }}
+                    aria-label="New project"
                 >
                     <Plus size={18}/>
                     New Project
@@ -105,6 +106,7 @@ function Projects()
                                     setEditingProject(project);
                                     setShowForm(true);
                                 }}
+                                aria-label="Edit project"
                             >
                                 <Pencil size={16}/>
                                 Edit
@@ -113,6 +115,7 @@ function Projects()
                             <button
                                 className="delete-button"
                                 onClick={()=> handleDelete(project.id)}
+                                aria-label="Delete project"
                             >
                                 <Trash2 size={16}/>
                                 Delete

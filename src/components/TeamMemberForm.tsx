@@ -87,11 +87,12 @@ export default function TeamMemberForm
                     type="button"
                     className="secondary-button"
                     onClick={onCancel}
+                     aria-label="Cancel changes"
                 >
                     Cancel
                 </button>
 
-                <button type="submit" className="primary-button">
+                <button type="submit" className="primary-button"  aria-label="Save changes">
                     {member ? 'Save Changes' : 'Add Member'}
                 </button>
             </div>
